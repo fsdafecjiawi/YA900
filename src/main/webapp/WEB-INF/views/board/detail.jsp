@@ -499,16 +499,21 @@ body {
 }
 
 .replyContents {
-	flex: 1;
-	min-width: 0;
-	height: 38px;
-	padding: 0 12px;
-	border: 1px solid transparent;
-	border-radius: 5px;
-	background-color: transparent;
-	font-size: 14px;
-	color: #333;
-	outline: none;
+    flex: 1;
+    min-width: 0;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 15px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.5;
+    box-sizing: border-box;
 }
 
 .replyContents:not([readonly]) {
@@ -806,9 +811,8 @@ body {
 									<div class="replyLine">
 
 										<form action="/board/replyUpdate" class="replyForm">
-											<input type="text" name="contents" class="replyContents"
-												readonly value="${reply.contents}"> <input
-												type="hidden" name="parent_seq" value="${board.board_seq}">
+											<textarea name="contents" class="replyContents"  readonly>${reply.contents}</textarea> 
+											<input type="hidden" name="parent_seq" value="${board.board_seq}">
 											<input type="hidden" name="reply_seq"
 												value="${reply.reply_seq}"> <span
 												class="replyWriter">${reply.writer}</span> <span
@@ -964,17 +968,20 @@ body {
 		});
 
 		$(".replyFix").on("click", function() {
-			let reply = $(this).closest(".replyForm").find(".replyContents");
-			if ($(this).text() != "완료") {
-				reply.prop("readonly", false);
-				$(this).text("완료");
-			} else {
-				if (!confirm("댓글을 수정하시겠습니까?")) {
-					return;
-				}
-				$(this).closest(".replyForm").submit();
-			}
+		    let form = $(this).closest(".replyForm");
+		    let contents = form.find(".replyContents");
+
+		    if(contents.prop("readonly")) {
+		        contents.prop("readonly", false);
+		        contents.focus();
+
+		        contents[0].style.height = "auto";
+		        contents[0].style.height = contents[0].scrollHeight + "px";
+		    } else {
+		        form.submit();
+		    }
 		});
+		
 		$(".replyDel").on(
 				"click",
 				function() {
@@ -1010,6 +1017,11 @@ body {
 			} else {
 				alert("로그인 후 이용 가능한 서비스입니다.");
 			}
+		});
+		
+		$(".replyContents").each(function() {
+		    this.style.height = "auto";
+		    this.style.height = this.scrollHeight + "px";
 		});
 	</script>
 </body>
