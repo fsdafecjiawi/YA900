@@ -779,6 +779,7 @@ body {
 						<input type="hidden" name="target_id" value="${board.writer}">
 						<input type="hidden" name="reporter" value="${id}"> <input
 							type="hidden" id="report_type" name="report_type">
+						<button type="button" class="bookmark" onclick="location.href='/board/bookmark'">북마크</button>
 						<button type="button" class="boardReport">신고</button>
 					</form>
 				</div>
@@ -829,7 +830,6 @@ body {
 												value="${board.board_seq}"> <input type="hidden"
 												name="reporter" value="${id}"> <input type="hidden"
 												class="report_type" name="report_type">
-
 											<button type="button" class="replyReport">신고</button>
 										</form>
 
